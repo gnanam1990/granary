@@ -22,6 +22,7 @@ Pinned dependencies: forge-std v1.17.0 (f3dae6e), openzeppelin-contracts v5.7.0 
 
 CI evidence (GitHub Actions, workflow `ci`):
 
-- Green matrix run, head `36c5f31`: https://github.com/gnanam1990/granary/actions/runs/45532304910 — `gate` passed on **ubuntu-latest, macos-latest and windows-latest** (install → eslint+prettier → tsc typecheck → vitest → forge fmt --check → forge build → forge test). The final squash-merge head differs only by this `PROVEN.md` edit; the rerun must stay green before merge.
+- Green matrix run, head `3293bfd` (final head): https://github.com/gnanam1990/granary/actions/runs/45533437223 — `gate` passed on **ubuntu-latest, macos-latest and windows-latest** (install → eslint+prettier → tsc typecheck → vitest → forge fmt --check → forge build → forge test).
+- Devin Review convergence on PR #1: three rounds on heads `7b626f5` → `c087a1d` → `3293bfd`. Fixed: `engines.node` floor raised to match the eslint/vitest-supported ranges (`^22.13.0 || ^24.0.0 || >=26.0.0`); seven vendored build-pack JSON files renormalized CRLF → LF. Final round: zero bug/security findings; three flags remain that concern vendored build-pack spec content (demo payment below keeper minimum, BillRefused reindex gap, planBill vs invariant I4) and were escalated to the owner, since fixing them means editing the spec, not this PR's code.
 - Gate proof, scratch head `6b20925`: https://github.com/gnanam1990/granary/actions/runs/45531941830 — failed at the **Unit tests** step with exactly the planted assertion (`expected '@granary/core' to be 'deliberately-wrong'`), lint and typecheck having passed first. Scratch PR #2 closed unmerged.
 - Branch protection on `main`: applied by the owner (no repo-admin credentials available in the build environment).
