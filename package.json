@@ -10,7 +10,8 @@
     "lint": "eslint . && prettier --check .",
     "typecheck": "pnpm -r --if-present run typecheck",
     "test": "pnpm -r --if-present run test",
-    "build": "pnpm -r --if-present run build"
+    "build": "pnpm -r --if-present run build",
+    "refresh-snapshots": "node --experimental-strip-types scripts/refresh-snapshots.ts"
   },
   "devDependencies": {
     "@types/node": "22.20.5",

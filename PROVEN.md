@@ -26,3 +26,32 @@ CI evidence (GitHub Actions, workflow `ci`):
 - Devin Review convergence on PR #1: three rounds on heads `7b626f5` → `c087a1d` → `3293bfd`. Fixed: `engines.node` floor raised to match the eslint/vitest-supported ranges (`^22.13.0 || ^24.0.0 || >=26.0.0`); seven vendored build-pack JSON files renormalized CRLF → LF. Final round: zero bug/security findings; three flags remain that concern vendored build-pack spec content (demo payment below keeper minimum, BillRefused reindex gap, planBill vs invariant I4) and were escalated to the owner, since fixing them means editing the spec, not this PR's code.
 - Gate proof, scratch head `6b20925`: https://github.com/gnanam1990/granary/actions/runs/45531941830 — failed at the **Unit tests** step with exactly the planted assertion (`expected '@granary/core' to be 'deliberately-wrong'`), lint and typecheck having passed first. Scratch PR #2 closed unmerged.
 - Branch protection on `main`: applied by the owner (no repo-admin credentials available in the build environment).
+
+## M00 merge
+
+- PR #1 squash-merged to `main` as `1a9afdeba566e248066f5cdc190ece016daf81c4` (2026-11-25); head branch deleted. Merge executed via the GitHub API with the owner's repo-scoped token after Devin Review convergence and a green three-OS matrix.
+
+## M01 — spikes and constants
+
+Local machine same as M00. All commands run 2026-11-25.
+
+| Command                                                                   | Exit | Result                                                                                           |
+| ------------------------------------------------------------------------- | ---- | ------------------------------------------------------------------------------------------------ |
+| `pnpm install`                                                            | 0    | viem 2.58.6 + @types/node added to `@granary/chain`                                              |
+| `pnpm lint`                                                               | 0    | no findings                                                                                      |
+| `pnpm typecheck`                                                          | 0    | 6/6 packages clean                                                                               |
+| `pnpm test`                                                               | 0    | 9 test files: packages/chain 5 passed + 1 skipped (live RPC), 5 scaffold placeholders passed     |
+| `BASE_RPC_URL=https://mainnet.base.org pnpm --filter @granary/chain test` | 0    | 6/6 incl. live `idToMarketParams` match for all 26 configured markets                            |
+| `pnpm refresh-snapshots`                                                  | 0    | both snapshot files rewritten atomically from live APIs: 13 stocks, 26 markets, no zero navPrice |
+
+Test-first evidence: `addresses.test.ts`/`snapshots.test.ts` failed initially with `Cannot find module '../src/abis/morpho'` / `'../src/addresses'` (expected), passing after implementation.
+
+Spike evidence lives in `spikes/*/RESULT.md`:
+
+- S1 PASS — anvil fork executes B20 precompile reads and an impersonated transfer (tx `0x108ed5d884f99b7bacedf6cfc7454a2141a978cbe3b72cb82dd67a3f1f9ed3df` inside the local fork).
+- S3 PARTIAL (fallback stands) — all feeds 8 decimals; sampled `updatedAt` ages logged; full heartbeat deferred to keeper runtime data.
+- S6 PASS — KyberSwap router `0x6131B5fae19EA4f9D964eAc0408E4408b66337b5` confirmed; USDC→SPCXc +0.314% vs NAV at USD 5, +0.315% at USD 50.
+- S8 PASS — package names/versions recorded.
+- S2/S4/S5/S7 BLOCKED [HUMAN] — funded wallet, CDP keys and the submission form needed; no mainnet spend attempted, no fallback triggered.
+
+No mainnet transaction was sent; total spend USD 0.
