@@ -10,3 +10,4 @@ What was chosen and why, newest last. IDs D1–D7 are opened by the TDD (`docs/b
 - **Foundry in CI is installed with the official installer + `foundryup --install stable`** in a bash step instead of a third-party action: one code path works identically on all three operating systems.
 - **Lint = eslint (typescript-eslint strict) + prettier --check.** `contracts/`, `docs/`, `pnpm-lock.yaml` are excluded from both; Solidity formatting is enforced separately with `forge fmt --check` in CI.
 - **First commit to `main` carries only the build pack and `CLAUDE.md`** to establish the repo; everything else lands by pull request, per the module spec.
+- **License is Apache-2.0**, chosen by the owner over the pack's MIT proposal.

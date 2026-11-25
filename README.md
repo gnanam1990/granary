@@ -47,4 +47,4 @@ cd contracts && forge build && forge test
 
 ## License
 
-MIT (pending owner confirmation). Third-party notices in `NOTICE`.
+Apache-2.0. Third-party notices in `NOTICE`.
