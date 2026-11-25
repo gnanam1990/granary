@@ -1,0 +1,69 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Unit tests
+        run: pnpm test
+
+      - name: Cache Foundry
+        uses: actions/cache@v4
+        with:
+          path: ~/.foundry
+          key: ${{ runner.os }}-foundry-stable-v1
+
+      - name: Install Foundry
+        shell: bash
+        run: |
+          curl -sL https://foundry.paradigm.xyz | bash
+          "$HOME/.foundry/bin/foundryup" --install stable
+          echo "$HOME/.foundry/bin" >> "$GITHUB_PATH"
+
+      - name: forge fmt check
+        working-directory: contracts
+        shell: bash
+        run: forge fmt --check
+
+      - name: forge build
+        working-directory: contracts
+        shell: bash
+        run: forge build
+
+      - name: forge test
+        working-directory: contracts
+        shell: bash
+        run: forge test -vvv
