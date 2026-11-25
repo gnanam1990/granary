@@ -20,5 +20,8 @@ Test-first evidence: with `src/index.ts` absent, `pnpm test` failed in all six p
 
 Pinned dependencies: forge-std v1.17.0 (f3dae6e), openzeppelin-contracts v5.7.0 (cab1993), both as git submodules under `contracts/lib/`.
 
-CI run link: — pending first push —
-Cross-platform matrix evidence (ubuntu/macos/windows): — pending CI —
+CI evidence (GitHub Actions, workflow `ci`):
+
+- Green matrix run, head `36c5f31`: https://github.com/gnanam1990/granary/actions/runs/45532304910 — `gate` passed on **ubuntu-latest, macos-latest and windows-latest** (install → eslint+prettier → tsc typecheck → vitest → forge fmt --check → forge build → forge test). The final squash-merge head differs only by this `PROVEN.md` edit; the rerun must stay green before merge.
+- Gate proof, scratch head `6b20925`: https://github.com/gnanam1990/granary/actions/runs/45531941830 — failed at the **Unit tests** step with exactly the planted assertion (`expected '@granary/core' to be 'deliberately-wrong'`), lint and typecheck having passed first. Scratch PR #2 closed unmerged.
+- Branch protection on `main`: applied by the owner (no repo-admin credentials available in the build environment).
