@@ -43,15 +43,22 @@ jobs:
       - name: Cache Foundry
         uses: actions/cache@v4
         with:
-          path: ~/.foundry
+          path: |
+            ~/.foundry
+            ~/.config/.foundry
           key: ${{ runner.os }}-foundry-stable-v1
 
       - name: Install Foundry
         shell: bash
         run: |
           curl -sL https://foundry.paradigm.xyz | bash
-          "$HOME/.foundry/bin/foundryup" --install stable
-          echo "$HOME/.foundry/bin" >> "$GITHUB_PATH"
+          FOUNDRY_BIN=""
+          for d in "$HOME/.foundry/bin" "$HOME/.config/.foundry/bin"; do
+            if [ -x "$d/foundryup" ]; then FOUNDRY_BIN="$d"; break; fi
+          done
+          if [ -z "$FOUNDRY_BIN" ]; then echo "foundryup binary not found"; exit 1; fi
+          "$FOUNDRY_BIN/foundryup" --install stable
+          echo "$FOUNDRY_BIN" >> "$GITHUB_PATH"
 
       - name: forge fmt check
         working-directory: contracts
