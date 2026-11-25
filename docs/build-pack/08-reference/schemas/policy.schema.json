@@ -1,0 +1,62 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "GranaryPolicyDraft",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "reserveFloor",
+  "reserveTarget",
+  "repayBps",
+  "investBps",
+  "maxLtvBps",
+  "dailyOpexCap",
+  "maxSlippageBps",
+  "navMaxAge",
+  "notes"
+ ],
+ "properties": {
+  "reserveFloor": {
+   "type": "string",
+   "pattern": "^[0-9]{1,13}$",
+   "description": "USDC micro-units"
+  },
+  "reserveTarget": {
+   "type": "string",
+   "pattern": "^[0-9]{1,13}$"
+  },
+  "repayBps": {
+   "type": "integer",
+   "minimum": 1000,
+   "maximum": 10000
+  },
+  "investBps": {
+   "type": "integer",
+   "minimum": 0,
+   "maximum": 10000
+  },
+  "maxLtvBps": {
+   "type": "integer",
+   "minimum": 0,
+   "maximum": 5700,
+   "description": "also must be <= market LLTV bps - 2000"
+  },
+  "dailyOpexCap": {
+   "type": "string",
+   "pattern": "^[0-9]{1,13}$"
+  },
+  "maxSlippageBps": {
+   "type": "integer",
+   "minimum": 1,
+   "maximum": 500
+  },
+  "navMaxAge": {
+   "type": "integer",
+   "minimum": 60,
+   "maximum": 93600
+  },
+  "notes": {
+   "type": "string",
+   "maxLength": 400
+  }
+ }
+}
