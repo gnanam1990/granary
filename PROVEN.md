@@ -51,7 +51,9 @@ Spike evidence lives in `spikes/*/RESULT.md`:
 - S1 PASS — anvil fork executes B20 precompile reads and an impersonated transfer (tx `0x108ed5d884f99b7bacedf6cfc7454a2141a978cbe3b72cb82dd67a3f1f9ed3df` inside the local fork).
 - S3 PARTIAL (fallback stands) — all feeds 8 decimals; sampled `updatedAt` ages logged; full heartbeat deferred to keeper runtime data.
 - S6 PASS — KyberSwap router `0x6131B5fae19EA4f9D964eAc0408E4408b66337b5` confirmed; USDC→SPCXc +0.314% vs NAV at USD 5, +0.315% at USD 50.
+- S6 re-run with enforcement (`spikes/S6-swap-route/run.sh`, exit 0): deviations −0.152% / +0.012% vs the live NAV, router equality asserted, `/route/build` calldata 4,228–4,708 bytes.
 - S8 PASS — package names/versions recorded.
+- B20 registry probe (Base mainnet, 2026-11-25): `cast call 0x8453000000000000000000000000000000000002 "isAuthorized(uint64,address)(bool)" 1 0x...0001` → `true`; the `bytes32` encoding reverts; `policyExists(uint64)` → `false` / `bytes32` reverts. Policy IDs are uint64.
 - S2/S4/S5/S7 BLOCKED [HUMAN] — funded wallet, CDP keys and the submission form needed; no mainnet spend attempted, no fallback triggered.
 
 No mainnet transaction was sent; total spend USD 0.

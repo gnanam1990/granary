@@ -165,19 +165,19 @@ async function refreshMarkets(): Promise<string> {
   );
 }
 
-// Both payloads are built before either file is written, and each file is
-// written to a temp path then renamed: a failed refresh never leaves a mixed
-// or truncated pair on disk.
+// Both payloads are built before any write; both temp files are written before
+// either rename, so a failed refresh never leaves a mixed or truncated pair.
 const stocksPayload = await refreshStocks();
 const marketsPayload = await refreshMarkets();
-for (const [name, payload] of [
+const pairs = [
   ["stocks.snapshot.json", stocksPayload],
   ["morpho-stock-markets.snapshot.json", marketsPayload],
-] as const) {
-  const target = new URL(name, OUT_DIR);
-  const tmp = new URL(`${name}.tmp`, OUT_DIR);
-  writeFileSync(tmp, payload);
-  renameSync(tmp, target);
+] as const;
+for (const [name, payload] of pairs) {
+  writeFileSync(new URL(`${name}.tmp`, OUT_DIR), payload);
+}
+for (const [name] of pairs) {
+  renameSync(new URL(`${name}.tmp`, OUT_DIR), new URL(name, OUT_DIR));
 }
 console.log(
   "stocks.snapshot.json + morpho-stock-markets.snapshot.json refreshed",

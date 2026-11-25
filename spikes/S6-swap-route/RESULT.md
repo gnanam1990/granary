@@ -13,8 +13,10 @@ GET ... amountIn=50000000
 
 | Size      | amountOut (raw, 8dp) | shares     | value at NAV | deviation vs NAV |
 | --------- | -------------------- | ---------- | ------------ | ---------------- |
-| USD 5.00  | 4,021,709            | 0.04021709 | $5.0159      | +0.314%          |
-| USD 50.00 | 40,218,118           | 0.40218118 | $50.1600     | +0.315%          |
+| USD 5.00  | 4,024,509            | 0.04024509 | $4.9941      | −0.152%          |
+| USD 50.00 | 40,283,220           | 0.40283220 | $49.9885     | +0.012%          |
+
+(enforcing run ~03:05 UTC: deviation computed against the live feed answer $124.10; `run.sh` exits non-zero outside ±1.5% or on any router mismatch)
 
 - `routerAddress` field of the response: `0x6131B5fae19EA4f9D964eAc0408E4408b66337b5` (same as the MaxxAgent-sourced candidate, now confirmed by the provider's own API).
 - `/route/build` verified: posting both route summaries returns executable calldata (4,708 bytes) targeting the same router — quotes are not just indicative.
