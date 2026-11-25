@@ -1,0 +1,15 @@
+{
+  "name": "@granary/demo-seller",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Small paid x402 API that dogfoods Granary.",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "vitest": "5.1.1"
+  }
+}

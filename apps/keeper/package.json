@@ -1,0 +1,15 @@
+{
+  "name": "@granary/keeper",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Keeper service: detect revenue, settle, invest, watch risk; ledger DB; API.",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "vitest": "5.1.1"
+  }
+}

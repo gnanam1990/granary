@@ -1,0 +1,12 @@
+Third-party software notices
+
+This repository depends on, but does not vendor or redistribute unless noted:
+
+- OpenZeppelin Contracts — MIT License — https://github.com/OpenZeppelin/openzeppelin-contracts
+  (installed under contracts/lib/ as a git submodule; copyright OpenZeppelin)
+- forge-std — MIT OR Apache-2.0 — https://github.com/foundry-rs/forge-std
+  (installed under contracts/lib/ as a git submodule)
+
+Tokenized stock tokens, Morpho Blue, Chainlink feeds and Base are separate systems
+operated by their own entities. No endorsement by Base, Coinbase, Morpho, Chainlink
+or any listed company is claimed or implied.

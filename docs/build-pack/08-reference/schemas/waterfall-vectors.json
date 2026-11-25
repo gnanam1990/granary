@@ -1,0 +1,290 @@
+{
+ "note": "All amounts are USDC micro-units as decimal strings. splitRevenue must return exactly these values in TypeScript and in Solidity.",
+ "vectors": [
+  {
+   "name": "empty vault, 100 USDC in",
+   "revenue": "100000000",
+   "reserve": "0",
+   "debt": "0",
+   "policy": {
+    "reserveFloor": "5000000",
+    "reserveTarget": "25000000",
+    "repayBps": 10000,
+    "investBps": 8000
+   },
+   "expect": {
+    "toFloor": "5000000",
+    "toRepay": "0",
+    "toReserve": "20000000",
+    "toInvest": "60000000",
+    "toFree": "15000000"
+   }
+  },
+  {
+   "name": "reserve full, no debt",
+   "revenue": "100000000",
+   "reserve": "25000000",
+   "debt": "0",
+   "policy": {
+    "reserveFloor": "5000000",
+    "reserveTarget": "25000000",
+    "repayBps": 10000,
+    "investBps": 8000
+   },
+   "expect": {
+    "toFloor": "0",
+    "toRepay": "0",
+    "toReserve": "0",
+    "toInvest": "80000000",
+    "toFree": "20000000"
+   }
+  },
+  {
+   "name": "debt 8, reserve 0, 10 in",
+   "revenue": "10000000",
+   "reserve": "0",
+   "debt": "8000000",
+   "policy": {
+    "reserveFloor": "5000000",
+    "reserveTarget": "25000000",
+    "repayBps": 10000,
+    "investBps": 8000
+   },
+   "expect": {
+    "toFloor": "5000000",
+    "toRepay": "5000000",
+    "toReserve": "0",
+    "toInvest": "0",
+    "toFree": "0"
+   }
+  },
+  {
+   "name": "debt 8, reserve at floor, 10 in",
+   "revenue": "10000000",
+   "reserve": "5000000",
+   "debt": "8000000",
+   "policy": {
+    "reserveFloor": "5000000",
+    "reserveTarget": "25000000",
+    "repayBps": 10000,
+    "investBps": 8000
+   },
+   "expect": {
+    "toFloor": "0",
+    "toRepay": "8000000",
+    "toReserve": "2000000",
+    "toInvest": "0",
+    "toFree": "0"
+   }
+  },
+  {
+   "name": "debt bigger than revenue",
+   "revenue": "3000000",
+   "reserve": "5000000",
+   "debt": "50000000",
+   "policy": {
+    "reserveFloor": "5000000",
+    "reserveTarget": "25000000",
+    "repayBps": 10000,
+    "investBps": 8000
+   },
+   "expect": {
+    "toFloor": "0",
+    "toRepay": "3000000",
+    "toReserve": "0",
+    "toInvest": "0",
+    "toFree": "0"
+   }
+  },
+  {
+   "name": "zero revenue",
+   "revenue": "0",
+   "reserve": "3000000",
+   "debt": "4000000",
+   "policy": {
+    "reserveFloor": "5000000",
+    "reserveTarget": "25000000",
+    "repayBps": 10000,
+    "investBps": 8000
+   },
+   "expect": {
+    "toFloor": "0",
+    "toRepay": "0",
+    "toReserve": "0",
+    "toInvest": "0",
+    "toFree": "0"
+   }
+  },
+  {
+   "name": "one micro-unit, reserve below floor",
+   "revenue": "1",
+   "reserve": "0",
+   "debt": "9",
+   "policy": {
+    "reserveFloor": "5000000",
+    "reserveTarget": "25000000",
+    "repayBps": 10000,
+    "investBps": 8000
+   },
+   "expect": {
+    "toFloor": "1",
+    "toRepay": "0",
+    "toReserve": "0",
+    "toInvest": "0",
+    "toFree": "0"
+   }
+  },
+  {
+   "name": "one micro-unit, reserve at floor, debt",
+   "revenue": "1",
+   "reserve": "5000000",
+   "debt": "9",
+   "policy": {
+    "reserveFloor": "5000000",
+    "reserveTarget": "25000000",
+    "repayBps": 10000,
+    "investBps": 8000
+   },
+   "expect": {
+    "toFloor": "0",
+    "toRepay": "1",
+    "toReserve": "0",
+    "toInvest": "0",
+    "toFree": "0"
+   }
+  },
+  {
+   "name": "reserve above target",
+   "revenue": "40000000",
+   "reserve": "60000000",
+   "debt": "0",
+   "policy": {
+    "reserveFloor": "5000000",
+    "reserveTarget": "25000000",
+    "repayBps": 10000,
+    "investBps": 8000
+   },
+   "expect": {
+    "toFloor": "0",
+    "toRepay": "0",
+    "toReserve": "0",
+    "toInvest": "32000000",
+    "toFree": "8000000"
+   }
+  },
+  {
+   "name": "repay 50 percent",
+   "revenue": "20000000",
+   "reserve": "5000000",
+   "debt": "30000000",
+   "policy": {
+    "reserveFloor": "5000000",
+    "reserveTarget": "25000000",
+    "repayBps": 5000,
+    "investBps": 8000
+   },
+   "expect": {
+    "toFloor": "0",
+    "toRepay": "10000000",
+    "toReserve": "10000000",
+    "toInvest": "0",
+    "toFree": "0"
+   }
+  },
+  {
+   "name": "invest 0 percent",
+   "revenue": "50000000",
+   "reserve": "25000000",
+   "debt": "0",
+   "policy": {
+    "reserveFloor": "5000000",
+    "reserveTarget": "25000000",
+    "repayBps": 10000,
+    "investBps": 0
+   },
+   "expect": {
+    "toFloor": "0",
+    "toRepay": "0",
+    "toReserve": "0",
+    "toInvest": "0",
+    "toFree": "50000000"
+   }
+  },
+  {
+   "name": "invest 100 percent",
+   "revenue": "50000000",
+   "reserve": "25000000",
+   "debt": "0",
+   "policy": {
+    "reserveFloor": "5000000",
+    "reserveTarget": "25000000",
+    "repayBps": 10000,
+    "investBps": 10000
+   },
+   "expect": {
+    "toFloor": "0",
+    "toRepay": "0",
+    "toReserve": "0",
+    "toInvest": "50000000",
+    "toFree": "0"
+   }
+  },
+  {
+   "name": "odd amounts rounding",
+   "revenue": "33333333",
+   "reserve": "1234567",
+   "debt": "7654321",
+   "policy": {
+    "reserveFloor": "5000000",
+    "reserveTarget": "25000000",
+    "repayBps": 3333,
+    "investBps": 6667
+   },
+   "expect": {
+    "toFloor": "3765433",
+    "toRepay": "7654321",
+    "toReserve": "20000000",
+    "toInvest": "1275783",
+    "toFree": "637796"
+   }
+  },
+  {
+   "name": "floor equals target",
+   "revenue": "12000000",
+   "reserve": "2000000",
+   "debt": "1000000",
+   "policy": {
+    "reserveFloor": "10000000",
+    "reserveTarget": "10000000",
+    "repayBps": 10000,
+    "investBps": 8000
+   },
+   "expect": {
+    "toFloor": "8000000",
+    "toRepay": "1000000",
+    "toReserve": "0",
+    "toInvest": "2400000",
+    "toFree": "600000"
+   }
+  },
+  {
+   "name": "large revenue",
+   "revenue": "1000000000000",
+   "reserve": "0",
+   "debt": "123456789",
+   "policy": {
+    "reserveFloor": "5000000",
+    "reserveTarget": "25000000",
+    "repayBps": 10000,
+    "investBps": 8000
+   },
+   "expect": {
+    "toFloor": "5000000",
+    "toRepay": "123456789",
+    "toReserve": "20000000",
+    "toInvest": "799881234568",
+    "toFree": "199970308643"
+   }
+  }
+ ]
+}

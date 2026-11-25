@@ -1,0 +1,118 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "VaultBooksResponse",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "vault",
+  "owner",
+  "stock",
+  "marketId",
+  "books",
+  "policy",
+  "asOfBlock"
+ ],
+ "properties": {
+  "vault": {
+   "type": "string"
+  },
+  "owner": {
+   "type": "string"
+  },
+  "stock": {
+   "type": "object",
+   "required": [
+    "address",
+    "symbol",
+    "decimals",
+    "multiplierWad",
+    "navPrice",
+    "navUpdatedAt"
+   ],
+   "properties": {
+    "address": {
+     "type": "string"
+    },
+    "symbol": {
+     "type": "string"
+    },
+    "decimals": {
+     "type": "integer"
+    },
+    "multiplierWad": {
+     "type": "string"
+    },
+    "navPrice": {
+     "type": "string"
+    },
+    "navUpdatedAt": {
+     "type": "integer"
+    }
+   }
+  },
+  "marketId": {
+   "type": "string"
+  },
+  "books": {
+   "type": "object",
+   "required": [
+    "reserve",
+    "investable",
+    "freeCash",
+    "collateral",
+    "collateralValue",
+    "debt",
+    "ltvBps",
+    "creditLeft",
+    "band",
+    "marketLiquidity",
+    "borrowApyBps"
+   ],
+   "properties": {
+    "reserve": {
+     "type": "string"
+    },
+    "investable": {
+     "type": "string"
+    },
+    "freeCash": {
+     "type": "string"
+    },
+    "collateral": {
+     "type": "string"
+    },
+    "collateralValue": {
+     "type": "string"
+    },
+    "debt": {
+     "type": "string"
+    },
+    "creditLeft": {
+     "type": "string"
+    },
+    "marketLiquidity": {
+     "type": "string"
+    },
+    "ltvBps": {
+     "type": "integer"
+    },
+    "borrowApyBps": {
+     "type": "integer"
+    },
+    "band": {
+     "enum": [
+      "OK",
+      "WATCH",
+      "DANGER"
+     ]
+    }
+   }
+  },
+  "policy": {
+   "type": "object"
+  },
+  "asOfBlock": {
+   "type": "integer"
+  }
+ }
+}

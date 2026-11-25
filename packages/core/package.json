@@ -1,0 +1,15 @@
+{
+  "name": "@granary/core",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Pure policy math (waterfall, credit). No I/O, bigint only.",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "vitest": "5.1.1"
+  }
+}
