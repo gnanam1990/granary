@@ -24,15 +24,17 @@ import json, sys
 d = json.load(sys.stdin)['data']['routeSummary']
 router = d['routerAddress']
 assert router.lower() == '$EXPECTED_ROUTER'.lower(), f'unexpected router {router}'
+# exact USDC spent (6 decimals), not kyberswap's USD estimate
+paid = int(d['amountIn']) / 1e6
 shares = int(d['amountOut']) / 1e8
-paid = float(d['amountInUsd'])
 nav_value = shares * $NAV
-dev = (nav_value / paid - 1) * 100
+# compare in integer basis points: a quote exactly at the inclusive limit passes
+dev_bps = round((nav_value / paid - 1) * 10000)
 print('routerAddress:', router)
-print('amountOut:', d['amountOut'], 'amountInUsd:', paid, 'amountOutUsd:', d['amountOutUsd'])
+print('amountOut:', d['amountOut'], 'usdcSpent:', paid, 'amountOutUsd:', d['amountOutUsd'])
 print('gasUsd:', d['gasUsd'])
-print(f'shares: {shares} navValueUsd: {nav_value:.4f} deviation vs NAV: {dev:+.3f}%')
-assert abs(dev) <= 1.5, f'route outside 1.5% NAV bound: {dev:+.3f}%'
+print(f'shares: {shares} navValueUsd: {nav_value:.4f} deviation vs NAV: {dev_bps / 100:+.2f}%')
+assert abs(dev_bps) <= 150, f'route outside 1.5% NAV bound: {dev_bps / 100:+.2f}%'
 "
   echo "-- /route/build (calldata check)"
   echo "$ROUTE" | python3 -c "

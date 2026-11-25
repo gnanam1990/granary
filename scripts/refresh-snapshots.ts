@@ -4,7 +4,7 @@
 // Read-only: no keys, no transactions. Exit 1 on any API failure — never
 // write a partial snapshot.
 
-import { renameSync, writeFileSync } from "node:fs";
+import { readFileSync, renameSync, writeFileSync } from "node:fs";
 
 const STOCKS_API = "https://api.coinbase.com/v1/tokenized-stocks";
 const MORPHO_GQL = "https://blue-api.morpho.org/graphql";
@@ -165,8 +165,8 @@ async function refreshMarkets(): Promise<string> {
   );
 }
 
-// Both payloads are built before any write; both temp files are written before
-// either rename, so a failed refresh never leaves a mixed or truncated pair.
+// Both payloads are built before any write; both temp files are byte-verified
+// before either rename, so a failed refresh never leaves a mixed or truncated pair.
 const stocksPayload = await refreshStocks();
 const marketsPayload = await refreshMarkets();
 const pairs = [
@@ -175,6 +175,11 @@ const pairs = [
 ] as const;
 for (const [name, payload] of pairs) {
   writeFileSync(new URL(`${name}.tmp`, OUT_DIR), payload);
+}
+for (const [name, payload] of pairs) {
+  const written = readFileSync(new URL(`${name}.tmp`, OUT_DIR), "utf8");
+  if (written !== payload)
+    throw new Error(`temp write verification failed for ${name}`);
 }
 for (const [name] of pairs) {
   renameSync(new URL(`${name}.tmp`, OUT_DIR), new URL(name, OUT_DIR));
