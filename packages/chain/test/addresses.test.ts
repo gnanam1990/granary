@@ -7,6 +7,7 @@ import {
   MARKETS,
   MORPHO_BLUE,
   STOCKS,
+  SWAP_ROUTER,
   USDC,
 } from "../src/addresses";
 
@@ -15,6 +16,7 @@ describe("chain constants", () => {
     const all = [
       USDC,
       MORPHO_BLUE,
+      SWAP_ROUTER,
       ...STOCKS.flatMap((s) => [s.address, s.navFeed]),
       ...MARKETS.flatMap((m) => [m.oracle, m.irm]),
     ];

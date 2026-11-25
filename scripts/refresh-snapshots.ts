@@ -4,7 +4,7 @@
 // Read-only: no keys, no transactions. Exit 1 on any API failure — never
 // write a partial snapshot.
 
-import { writeFileSync } from "node:fs";
+import { renameSync, writeFileSync } from "node:fs";
 
 const STOCKS_API = "https://api.coinbase.com/v1/tokenized-stocks";
 const MORPHO_GQL = "https://blue-api.morpho.org/graphql";
@@ -84,6 +84,7 @@ interface MarketItem {
   irmAddress: string;
   oracle: { address: string };
   collateralAsset: { symbol: string; address: string; decimals: number };
+  loanAsset: { symbol: string; address: string; decimals: number };
   state: {
     supplyAssetsUsd: number;
     borrowAssetsUsd: number;
@@ -129,7 +130,11 @@ async function refreshMarkets(): Promise<string> {
   if (items.length === 0) throw new Error("morpho returned no markets");
 
   const markets = items
-    .filter((m) => m.state !== null)
+    .filter(
+      (m) =>
+        m.state !== null &&
+        m.loanAsset.address.toLowerCase() === USDC.toLowerCase(),
+    )
     .map((m) => ({
       collateral: m.collateralAsset.symbol,
       collateralAddress: m.collateralAsset.address,
@@ -160,15 +165,20 @@ async function refreshMarkets(): Promise<string> {
   );
 }
 
-// Both payloads are built before either file is written: a failed refresh
-// never leaves a mixed pair on disk.
+// Both payloads are built before either file is written, and each file is
+// written to a temp path then renamed: a failed refresh never leaves a mixed
+// or truncated pair on disk.
 const stocksPayload = await refreshStocks();
 const marketsPayload = await refreshMarkets();
-writeFileSync(new URL("stocks.snapshot.json", OUT_DIR), stocksPayload);
-writeFileSync(
-  new URL("morpho-stock-markets.snapshot.json", OUT_DIR),
-  marketsPayload,
-);
+for (const [name, payload] of [
+  ["stocks.snapshot.json", stocksPayload],
+  ["morpho-stock-markets.snapshot.json", marketsPayload],
+] as const) {
+  const target = new URL(name, OUT_DIR);
+  const tmp = new URL(`${name}.tmp`, OUT_DIR);
+  writeFileSync(tmp, payload);
+  renameSync(tmp, target);
+}
 console.log(
   "stocks.snapshot.json + morpho-stock-markets.snapshot.json refreshed",
 );

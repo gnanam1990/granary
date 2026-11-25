@@ -17,6 +17,7 @@ GET ... amountIn=50000000
 | USD 50.00 | 40,218,118           | 0.40218118 | $50.1600     | +0.315%          |
 
 - `routerAddress` field of the response: `0x6131B5fae19EA4f9D964eAc0408E4408b66337b5` (same as the MaxxAgent-sourced candidate, now confirmed by the provider's own API).
+- `/route/build` verified: posting both route summaries returns executable calldata (4,708 bytes) targeting the same router — quotes are not just indicative.
 - Gas estimate ~$0.004–0.008 per swap — negligible.
 - Route is a single direct pool hop both times.
 

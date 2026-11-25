@@ -104,7 +104,7 @@ export const b20Abi = [
     type: "function",
     stateMutability: "view",
     inputs: [
-      { name: "policyId", type: "bytes32" },
+      { name: "policyId", type: "uint64" },
       { name: "account", type: "address" },
     ],
     outputs: [{ name: "", type: "bool" }],
@@ -113,7 +113,7 @@ export const b20Abi = [
     name: "policyExists",
     type: "function",
     stateMutability: "view",
-    inputs: [{ name: "policyId", type: "bytes32" }],
+    inputs: [{ name: "policyId", type: "uint64" }],
     outputs: [{ name: "", type: "bool" }],
   },
 ] as const;

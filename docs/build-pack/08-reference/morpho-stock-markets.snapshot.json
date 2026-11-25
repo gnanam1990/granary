@@ -54,8 +54,8 @@
    "lltv": 0.625,
    "oracle": "0x4752B27dFc1931eb9a5DFEFC7FBC9d0af9020dC7",
    "irm": "0x46415998764C29aB2a25CbeA6254146D50D22687",
-   "supplyUsd": 402.13,
-   "borrowUsd": 363.16,
+   "supplyUsd": 402.11,
+   "borrowUsd": 363.14,
    "liquidityUsd": 38.97,
    "borrowApy": 0.0514
   },
@@ -98,7 +98,7 @@
    "irm": "0x46415998764C29aB2a25CbeA6254146D50D22687",
    "supplyUsd": 35.75,
    "borrowUsd": 25.13,
-   "liquidityUsd": 10.63,
+   "liquidityUsd": 10.62,
    "borrowApy": 0.0308
   },
   {
@@ -166,9 +166,9 @@
    "lltv": 0.77,
    "oracle": "0xE0AE3137a30393410B595E1C1d572a1449A969ea",
    "irm": "0x46415998764C29aB2a25CbeA6254146D50D22687",
-   "supplyUsd": 97.99,
+   "supplyUsd": 97.98,
    "borrowUsd": 0.01,
-   "liquidityUsd": 97.98,
+   "liquidityUsd": 97.97,
    "borrowApy": 0.0003
   },
   {
@@ -180,9 +180,9 @@
    "lltv": 0.77,
    "oracle": "0x24DC11055aa5b2C5692E4B77d7285c4f0fd9Cf99",
    "irm": "0x46415998764C29aB2a25CbeA6254146D50D22687",
-   "supplyUsd": 5828.69,
-   "borrowUsd": 4866.25,
-   "liquidityUsd": 962.43,
+   "supplyUsd": 5828.3,
+   "borrowUsd": 4865.93,
+   "liquidityUsd": 962.37,
    "borrowApy": 0.0555
   },
   {
@@ -222,9 +222,9 @@
    "lltv": 0.625,
    "oracle": "0xEcC5c9bf18CB2CfC94C2f7EFf8BDd5837A60AB0e",
    "irm": "0x46415998764C29aB2a25CbeA6254146D50D22687",
-   "supplyUsd": 3630.91,
-   "borrowUsd": 3109.44,
-   "liquidityUsd": 521.48,
+   "supplyUsd": 3630.67,
+   "borrowUsd": 3109.23,
+   "liquidityUsd": 521.44,
    "borrowApy": 0.0572
   },
   {
@@ -236,8 +236,8 @@
    "lltv": 0.625,
    "oracle": "0x4F698C04d01d9CebCDd9494c189aBdD6C5453f84",
    "irm": "0x46415998764C29aB2a25CbeA6254146D50D22687",
-   "supplyUsd": 551.4,
-   "borrowUsd": 500.2,
+   "supplyUsd": 551.36,
+   "borrowUsd": 500.17,
    "liquidityUsd": 51.2,
    "borrowApy": 0.0513
   },
@@ -320,9 +320,9 @@
    "lltv": 0.625,
    "oracle": "0x9079857a2b5FFfC3d87052b11b866a185B4A6483",
    "irm": "0x46415998764C29aB2a25CbeA6254146D50D22687",
-   "supplyUsd": 6786.21,
-   "borrowUsd": 5668.11,
-   "liquidityUsd": 1118.11,
+   "supplyUsd": 6785.76,
+   "borrowUsd": 5667.73,
+   "liquidityUsd": 1118.03,
    "borrowApy": 0.0556
   },
   {

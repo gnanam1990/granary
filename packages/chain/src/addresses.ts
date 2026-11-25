@@ -3,6 +3,9 @@
 export const USDC = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913" as const;
 export const MORPHO_BLUE =
   "0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb" as const;
+// KyberSwap aggregator router on Base, verified in spike S6 (2026-11-25).
+export const SWAP_ROUTER =
+  "0x6131B5fae19EA4f9D964eAc0408E4408b66337b5" as const;
 
 export interface StockConstant {
   symbol: string;
